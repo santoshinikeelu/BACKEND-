@@ -157,7 +157,69 @@ router.post( "/post-query-2", function (req, res){
         if ( myArr[i] > input )     finalArr.push( myArr[i])
     }
     res.send( {data: finalArr , status: true})
+
+
 })
 
 
-module.exports = router;
+
+let persons= [
+    {
+    "name": "PK",
+    "age": 10,
+    "votingStatus": false
+ },
+ {
+    "name": "SK",
+    "age": 20,
+   "votingStatus": false
+ },
+ {
+  
+    "name": "AA",
+    "age": 70,
+    "votingStatus": false
+ },
+ {
+    "name": "SC",
+    "age": 5,
+    "votingStatus": false
+ },
+ {
+    "name": "HO",
+    "age": 40,
+    "votingStatus": false
+ }
+ ]
+  
+  
+  
+ 
+ 
+
+router.post( "/voter", function (req, res){
+
+    
+    let output=[]
+
+    let input= req.query.age
+
+    
+    
+    for( i=0 ; i<persons.length ; i++){
+        if (persons[i].age >= input )   {
+            persons[i].votingStatus=true
+            output.push(persons[i])
+        } 
+    }
+    res.send({newList:output})
+})
+
+
+
+
+
+
+
+
+module.exports = router
