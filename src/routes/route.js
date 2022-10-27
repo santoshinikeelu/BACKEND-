@@ -18,7 +18,10 @@ router.get("/getBooksData", BookController.getBooksData)
 
 router.post("/updateBooks", BookController.updateBooks)
 router.post("/deleteBooks", BookController.deleteBooks)
-
+router.post("/createauthor", BookController.createAuthor)
+router.get("/getbooklist", BookController.getbooks)
+router.get("/findoneandupdatebook", BookController.findbook)
+router.get("/booksbyprice", BookController.FindBook)
 //MOMENT JS
 const moment = require('moment');
 router.get("/dateManipulations", function (req, res) {
