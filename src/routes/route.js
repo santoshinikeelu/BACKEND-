@@ -24,7 +24,6 @@ router.get("/getBooksWithAuthorDetails", bookController.getBooksWithAuthorDetail
 router.post("/createauthor", newauthorcontroller.createauthor  )
 router.post("/createPublisher",newpublisher.createpublisher)
 router.post("/CREATEBOOK",newbook.createbook)
-router.post("/createbook1",newbook.createbook1)
 router.get("/getallbookdata",newbook.getallbookdata)
 router.get("/getauthorsdata",newbook.getauthorsdata)
 router.put("/question4",newbook.question4)

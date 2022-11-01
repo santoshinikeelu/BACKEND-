@@ -1,17 +1,11 @@
-
+const {ObjectId,model, isValidObjectId} =require("mongoose")
 const newauthor = require("../models/newauthor.js")
 const newbook= require("../models/newbook.js")
 const newpublisher = require("../models/newpublisher.js")
 
 
+
 const createbook= async function (req, res) {
-    let book = req.body
-    // console.log(author)
-    let bookCreated = await newbook.create(book).populate('author')
-    
-    res.send({msg : bookCreated})
-}
-const createbook1= async function (req, res) {
     let book = req.body
     let author_id=book.author
     let publisher_id=book.publisher
@@ -50,9 +44,9 @@ const getauthorsdata = async function (req, res) {
 const question4= async function (req, res) {
    
     let obj1 = await newpublisher.findOne({name: "santoshini" })
-    let id1 = obj1.bdc234d240e6c8101fff4
+    let id1 = obj1._id
     let obj2 = await newpublisher.findOne({name: "rahul" })
-    let id2 = obj2.bdc3a4d240e6c8101fff6
+    let id2 = obj2._id
 
     let NEWBOOK = await newbook.updateMany(
         {publisher:[id1,id2]},
@@ -72,7 +66,7 @@ const question5= async function (req, res) {
     let arr1 = await newauthor.find({rating:{$gt: 3.5} })
     let newarr=[]
     for(i of arr1){
-        iid=i.bd23666a3e6f0b8f12f70
+        iid=i._id
       
        let tosend= await newbook.findOneAndUpdate(
             {author:iid},
@@ -90,7 +84,6 @@ const question5= async function (req, res) {
 
 
 module.exports. createbook = createbook
-module.exports.createbook1 = createbook1
 module.exports.getallbookdata = getallbookdata
 module.exports.getauthorsdata = getauthorsdata
 module.exports.question4 = question4
