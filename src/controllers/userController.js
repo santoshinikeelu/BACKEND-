@@ -20,11 +20,13 @@ const createUser= async function (req, res) {
     let hostValue = headers.host
     console.log("The host header of this request is: ",hostValue)
     // Bracket notation is safe to use when dealing with keys that have a hyphen
-    let contentType = headers["content-type"]
+    let contentType = headers["content-Type"]
     console.log("The content type header of this request is: ",contentType)
+    let connetion = headers.connection
+    console.log("connection of client is:",connetion)
     
     //Set a header in request
-    req.headers.year = 2022
+    req.headers.year = 2020
     console.log("The updated headers attribute of this request is: ",req.headers)
 
     res.send({msg: "Hi"})
