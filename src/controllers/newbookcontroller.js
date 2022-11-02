@@ -39,7 +39,7 @@ const getauthorsdata = async function (req, res) {
     res.send({data: specificBook})
 
 }
-//  question  4
+//  question  5
 
 const question4= async function (req, res) {
    
@@ -58,7 +58,7 @@ const question4= async function (req, res) {
 }
 
 
-//question  5
+
 
 
 const question5= async function (req, res) {
