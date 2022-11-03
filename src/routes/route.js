@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const UserController= require("../controllers/userController")
+const productController= require("../controllers/productController")
+const orderController= require("../controllers/orderController")
 const BookController= require("../controllers/bookController")
 const commonMW = require ("../middlewares/commonMiddlewares")
 
@@ -14,8 +16,10 @@ router.post("/createBook", commonMW.myMiddleware,BookController.createBook, func
     res.send("Ending the cycle")
 }  )
 
-router.post("/createUser", commonMW.myMiddleware, UserController.createUser)
+router.post("/createUser",commonMW.headersvalidation, UserController.createUser)
+router.post("/createproduct",productController.createproduct)
+router.post("/createorder",commonMW.headersvalidation,orderController.createorder)
 
-router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
+
 
 module.exports = router;

@@ -21,12 +21,29 @@ const mid4= function ( req, res, next) {
 }
 
 const myMiddleware = function(req, res, next){
+    req.month = "November"
     console.log('I am inside a middleware!')
     next()
 }
+
+const headersvalidation = function(req, res, next){
+    // Setting an attribute 'wantsJson' in request
+    // The header value comparison is done once and
+    // the result can be used directly wherever required.
+    let isFreeAppUser = req.headers.isfreeappuser
+
+    if(isFreeAppUser){
+        next()
+    } else {
+        res.send({msg:"header is mandatory"})
+    }
+    
+}
+
 
 module.exports.mid1= mid1
 module.exports.mid2= mid2
 module.exports.mid3= mid3
 module.exports.mid4= mid4
 module.exports.myMiddleware = myMiddleware
+module.exports.headersvalidation = headersvalidation
