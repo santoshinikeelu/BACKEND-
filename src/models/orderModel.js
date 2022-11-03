@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema( {
         type: ObjectId,
         ref: "product"
     }, 
-	amount: Number,
+	
 	isFreeAppUser:{
         type:Boolean,
         default:false

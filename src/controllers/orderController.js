@@ -10,7 +10,7 @@ const createorder= async function (req, res) {
     let checkuserid= await userModel.findById(userid)
     console.log(checkuserid)
     if(!checkuserid){
-        return res.send("Invalid user Id ui")
+        return res.send("Invalid user Id ")
     }
     
     let checkproductid= await productModel.findOne({_id:productid})
@@ -24,13 +24,16 @@ const createorder= async function (req, res) {
     order.isFreeAppUser=isFreeAppUser
     if(order.isFreeAppUser=="true"){
         order.amount=0
-    }
-    let orderCreated = await orderModel.create(order)
-    res.send({data: orderCreated})
     
-    let Balance =checkuserid .balance
+    let orderCreated = await orderModel.create(order)
+    res.send({data: orderCreated})}
+
+  else (order.isFreeAppUser=="false")
+   
+  
+let Balance =checkuserid .balance
     console.log(Balance)
-    if(Price>Balance){
+    if(Price>=Balance){
         return res.send("Insufficient Balance")
     }
     let user1 = await userModel.findOneAndUpdate(
@@ -43,8 +46,8 @@ const createorder= async function (req, res) {
        
     
     let orderCr = await orderModel.create(order)
-    res.send({msg:orderCr,user1})
-    console.log(orderCr,user1)
-   
+    res.send({msg:orderCr,data:user1})
+    console.log(orderCr)
     }
+    
 module.exports.createorder = createorder
