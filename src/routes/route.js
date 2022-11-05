@@ -16,5 +16,5 @@ router.get("/users/:userId",middleware.tokenvalidation, userController.getUserDa
 
 router.put("/user1/:userId",middleware.tokenvalidation ,userController.updatedUser)
 router.delete("/deletedData/:userId",middleware.tokenvalidation,userController.deleted)
-
+router.post("/fetchdata/:userId/post",middleware.updatepost,userController.postMessage)
 module.exports = router;
