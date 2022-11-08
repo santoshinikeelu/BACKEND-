@@ -1,22 +1,34 @@
 const jwt = require("jsonwebtoken");
+const { object } = require("underscore");
 const userModel = require("../models/userModel");
 
 
 const createUser = async function (req,res) {
-  
+  try{
   let data = req.body;
+  if(Object.keys(data).length !=0){
   let savedData = await userModel.create(data);
   //console.log(req.newAtribute);
-  res.send({ msg: savedData });
-};
+  res.status(201).send({ msg: savedData });
+}
+else{
+  res.status(400).send({msg:"Bad request"})
+}
+  }
+catch(err){
+  console.log("this is the error:",err.message)
+  res.status(500).send({msg:"Error",error:err.message})
+}
+}
 
 const loginUser = async function (req, res) {
+  try{
   let userName = req.body.emailId;
   let password = req.body.password;
 
   let user = await userModel.findOne({ emailId: userName, password: password });
   if (!user)
-    return res.send({
+    return res.status(500).send({
       status: false,
       msg: "username or the password is not corerct",
     });
@@ -36,8 +48,13 @@ const loginUser = async function (req, res) {
     "functionup-Lithium-very-very-secret-key"
   );
   res.setHeader("x-auth-token", token);
-  res.send({ status: true, token: token });
-};
+  res.status(201).send({ status: true, token: token });
+}
+catch(error){
+  console.log("this is the error:",error.message)
+  res.status(500).send({msg:"Error",error:error.message})
+}
+}
 
 const getUserData = async function (req, res) {
  // let token = req.headers["x-auth-token"];
@@ -52,11 +69,13 @@ const getUserData = async function (req, res) {
     return res.send({ status: false, msg: "token is invalid" });*/
 
   let userId = req.params.userId;
+  console.log(userId)
   let userDetails = await userModel.findById(userId);
+  console.log(userDetails)
   if (!userDetails)
-    return res.send({ status: false, msg: "No such user exists" });
+    return res.status(500).send({ status: false, msg: "No such user exists" });
 
-  res.send({ status: true, data: userDetails });
+  res.status(201).send({ status: true, data: userDetails });
   // Note: Try to see what happens if we change the secret while decoding the token
 };
 
@@ -71,20 +90,25 @@ const updatedUser = async function (req, res) {
   let decodedToken = jwt.verify(token, "functionup-Lithium-very-very-secret-key");
   if (!decodedToken)
     return res.send({ status: false, msg: "token is invalid" });*/
-
+try{
   
   let userId = req.params.userId;
   console.log(userId)
   let user = await userModel.findById(userId);
   console.log(user)
   if (!user) {
-    return res.send("No such user exists");
+    return res.status(500).send("No such user exists");
   }
 
   let userData = req.body;
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId },{$set:userData} );
-  res.send({ status: updatedUser, data: updatedUser });
-};
+  res.status(201).send({ status: updatedUser, data: updatedUser });
+}
+catch(error){
+  console.log("this is the error:",error.message)
+  res.status(500).send({msg:"Error",error:error.message})
+}
+}
 
 const deleted = async function (req, res) {
     /*let token = req.headers["x-auth-token"];
@@ -98,15 +122,22 @@ const deleted = async function (req, res) {
   if (!decodedToken)
     return res.send({ status: false, msg: "token is invalid" });*/
 
-  
+  try{
   let userId = req.params.userId;
   //let userData = req.body;
   let updatedData = await userModel.findOneAndUpdate({ _id: userId }, {$set:{isdeleted:true}},{new:true} );
   console.log(updatedData)
-  res.send({ status: updatedData });
-};
+  res.status(201).send({ status: updatedData });
+}
+catch(error){
+  console.log("this is the error:",error.message)
+  res.status(500).send({msg:"Error",error:error.message})
+}
+}
+
 
 const postMessage = async function (req, res) {
+  try{
     let message = req.body.message
     
     /*let token = req.headers["x-auth-token"]
@@ -124,7 +155,7 @@ const postMessage = async function (req, res) {
     if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})*/
 
     let user = await userModel.findById(req.params.userId)
-    if(!user) return res.send({status: false, msg: 'No such user exists'})
+    if(!user) return res.status(500).send({status: false, msg: 'No such user exists'})
     
     let updatedPosts = user.posts
     //add the message to user's posts
@@ -132,7 +163,12 @@ const postMessage = async function (req, res) {
     let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts}, {new: true})
 
     //return the updated user document
-    return res.send({status: true, data: updatedUser})
+    return res.status(201).send({status: true, data: updatedUser})
+}
+catch(error){
+  console.log("this is the error:",error.message)
+  res.status(500).send({msg:"Error",error:error.message})
+}
 }
 
 module.exports.createUser = createUser;
