@@ -3,7 +3,7 @@ let axios = require("axios")
 
 let creatememe = async function (req, res) {
     try {
-        let templetId  = req.query.template_Id
+        let templetId  = req.query.template_id
         let Text0 = req.query.text0
         let Text1 = req.query.text1
         let UserName = req.query.username
@@ -12,7 +12,7 @@ let creatememe = async function (req, res) {
         console.log(`query params are : ${templetId}  ${Text0} ${Text1}  ${UserName}  ${Password}`)
         var options = {
             method: "post",
-            url: `https://api.imgflip.com/caption_image?template_Id=${templetId}&text0=${Text0}&text1=${Text1}&username=${UserName}&password=${Password}`,
+            url: `https://api.imgflip.com/caption_image?template_id=${templetId}&text0=${Text0}&text1=${Text1}&username=${UserName}&password=${Password}`,
            // data:[templetId,Text0,Text1,UserName,Password]
         }
 
